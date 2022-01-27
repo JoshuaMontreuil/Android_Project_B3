@@ -1,72 +1,95 @@
 package com.example.project;
 
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Partie{
-    private int nbCartes;
-    private ArrayList<ObjetCarte> cartes = new ArrayList<>();
-    private int listChoisie;
-    private ArrayList<String> faceCartes = new ArrayList<>();
-    private ArrayList<String> dosCartes = new ArrayList<>();
-    private int listePaires[] = {0,0,0,0,0,0};
-    private ArrayList<String[]> listCartes;
-    private String[] imagesClassiques ={"avion","bateau","chaussure","chien","dent","ecureuil","fraise","grenouille","herisson","igloo","journal","kangourou","lapin","maison"};
+    private final int cardsNb;
+    private ArrayList<ObjetCarte> cards = new ArrayList<>();
+    private ArrayList<CardFragment> cardFragments = new ArrayList<>();
+    private List<String> choosenImgs = new ArrayList<>();
+    private List<String> cards_imgs = new ArrayList<>(Arrays.asList("avion","bateau","chaussure","chien","dent","ecureuil","fraise","grenouille","herisson","igloo","journal","kangourou","lapin","maison"));
 
-    public Partie(int nbCarte,int liste){
-        this.nbCartes = nbCarte;
-        this.listChoisie = liste;
-        if(liste ==0){
-            listCartes = new ArrayList<>();
-            listCartes.add(imagesClassiques);
-        }
-
+    public Partie(int cardsNb, ArrayList<CardFragment> fragments){
+        this.cardsNb = cardsNb;
+        initGame(fragments);
     }
 
-    public ArrayList<ObjetCarte> randomCartes(int nbCartes,ArrayList<ObjetCarte> cartes,int listChoisie){
-        Random r = new Random();
-
-        int random=0;
-        ArrayList<Integer> randomValue = new ArrayList<Integer>();
-
-        for (int i=0;i<nbCartes/2;i++) {
-
-            boolean verif_e=false;
-
-            while (verif_e==false) {
-                random = r.nextInt(12);
-                if(i!=0){
-                    verif_e=verifSimilarValue(i,randomValue,random);}
-                else{
-                    verif_e=true;
-                }
-            }
-            randomValue.add(i,random);
-            int l=i*2;
-            for(int j=0;j<2;j++){
-                ObjetCarte carte=new ObjetCarte();
-                carte.setImageDos("card");
-                carte.setImageFace(listCartes.get(listChoisie)[random]);
-                carte.setId(l);
-                l++;
-                cartes.add(i,carte);
-            }
-        }
-        return cartes;
+    public void initGame(ArrayList<CardFragment> fragments){
+        this.associateCardsToFragments(fragments);
+        this.bindRandomPairsToCards();
+        this.updateDisplay();
     }
-    public boolean verifSimilarValue(int i,ArrayList<Integer> randomValue,int random){
-        int similarValue=0;
-        for (int k=0;k<i;k++){
-            if (randomValue.get(k)==random){
-                similarValue++;
+
+    public void associateCardsToFragments(ArrayList<CardFragment> fragments){
+        for(int i=0;i<fragments.size();i++){
+            ObjetCarte new_card = new ObjetCarte(i,"init","init");
+            fragments.get(i).setAssociatedCard(new_card);
+            fragments.get(i).setAssociatedGameBoard(this);
+            cards.add(new_card);
+            cardFragments.add(fragments.get(i));
+        }
+    }
+
+    public void bindRandomPairsToCards(){
+        Random rand = new Random();
+        choosenImgs = this.selectPairs();
+        for(int x=0;x<choosenImgs.size()-x;x++){
+            choosenImgs.add(choosenImgs.get(x));
+        }
+        for(int i=0;i<cards.size();i++){ //Image de face
+            int index = rand.nextInt(choosenImgs.size());
+            cards.get(i).setImageFace(choosenImgs.get(index));
+            choosenImgs.remove(index);
+        }
+        for(int i=0;i<cards.size();i++){ //Image de dos
+            cards.get(i).setImageDos("card");
+        }
+    }
+
+    public ArrayList<String> selectPairs(){
+        Random rand = new Random();
+        List<String> choosenPairs = new ArrayList<>();
+        //On choisit des cartes dans la liste des cartes puis on les ajoute dans choosenPairs
+        for(int i=0;i<this.getCardsNb()/2;i++){
+            String randomElement = cards_imgs.get(rand.nextInt(cards_imgs.size()));
+            choosenPairs.add(randomElement);
+            cards_imgs.remove(randomElement); //On ne veut pas 2 fois la même paire
+        }
+        return (ArrayList<String>) choosenPairs;
+    }
+
+    public void hideAllCards(){
+        for(int i=0;i<cardFragments.size();i++){
+            cardFragments.get(i).getAssociatedCard().setState(0);
+            this.updateDisplay();
+        }
+    }
+
+    public void revealAllCards(){
+        for(int i=0;i<cardFragments.size();i++){
+            cardFragments.get(i).getAssociatedCard().setState(1);
+            this.updateDisplay();
+        }
+    }
+
+    public boolean revealAllowed(){
+        int revealedCards = 0;
+        for(int i=0;i<cards.size();i++){
+            if(cards.get(i).getState()==1){
+                revealedCards++;
             }
         }
-        if(similarValue!=0){
+        if(revealedCards==2){
             return false;
         }
         else{
@@ -74,53 +97,57 @@ public class Partie{
         }
     }
 
-    public ArrayList<String> initFaceCartes(ArrayList<ObjetCarte> objet){
-        for(int i = 0; i <nbCartes;i ++){
-            this.faceCartes.add(objet.get(i%3).getImageFace());
-        }
-        for(int i = 0; i < 5; i++){
-            Collections.shuffle(this.faceCartes);
-        }
-        for(int i = 1; i < nbCartes+1; i++){
-            setListePaires(i);
-        }
-
-        return this.faceCartes;
-    }
-
-    public ArrayList<String> initDosCartes(ArrayList<ObjetCarte> objet){
-        for(int i = 0; i <nbCartes;i ++){
-            dosCartes.add(objet.get(i%3).getImageDos());
-        }
-
-        return dosCartes;
-    }
-
-    public void setListePaires(int index){
-        String image = this.faceCartes.get(index-1);
-        for(int i = 0; i < this.faceCartes.size(); i++){
-            if(i != index-1){
-                if(image.equals(this.faceCartes.get(i))){
-                    this.listePaires[index - 1] = index;
-                    this.listePaires[i] = index;
-                }
+    public String pairFound(){
+        ArrayList<ObjetCarte> revealedCards = new ArrayList<>();
+        for(int i=0;i<cards.size();i++){
+            if(cards.get(i).getState()==1){
+                revealedCards.add(cards.get(i));
             }
         }
+        if(revealedCards.size()==2){
+            if(revealedCards.get(0).getImageFace().equals(revealedCards.get(1).getImageFace())){
+                //A pair has been found
+                return revealedCards.get(0).getImageFace();
+            }
+            else{
+                return "";
+            }
+        }
+        else{
+            return "";
+        }
     }
 
-    public int getNbCartes() {
-        return this.nbCartes;
+    public boolean allFound(){
+        int foundCards = 0;
+        for(int i=0;i<cards.size();i++){
+            if(cards.get(i).getFound()){
+                foundCards++;
+            }
+        }
+        if(foundCards==cardsNb){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
-    public ArrayList<ObjetCarte> getCartes() {
-        return this.cartes;
+    public void updateDisplay(){
+        for(int i=0;i<cards.size();i++){
+            cardFragments.get(i).updateCardDisplay();
+        }
     }
 
-    public int getListChoisie(){
-        return this.listChoisie;
+    public int getCardsNb() {
+        return this.cardsNb;
     }
 
-    public int[] getListePaires() {
-        return this.listePaires;
+    public ArrayList<ObjetCarte> getCards() {
+        return this.cards;
+    }
+
+    public ArrayList<CardFragment> getCardFragments() {
+        return this.cardFragments;
     }
 }

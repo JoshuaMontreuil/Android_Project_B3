@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/generalLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MemoryActivity"
@@ -23,15 +24,18 @@
             android:layout_weight="1">
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/card_1_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_weight="0.7">
-            <ImageView
-                android:id="@+id/carte1"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/card_fragment_1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </ImageView>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:name="com.example.project.CardFragment">
+            </androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,14 +43,18 @@
             android:layout_weight="1">
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/card_2_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7">
-            <ImageView
-                android:id="@+id/carte2"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/card_fragment_2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </ImageView>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:name="com.example.project.CardFragment">
+            </androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,14 +77,18 @@
             android:layout_weight="1">
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/card_3_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7">
-            <ImageView
-                android:id="@+id/carte3"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/card_fragment_3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </ImageView>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:name="com.example.project.CardFragment">
+            </androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,14 +96,18 @@
             android:layout_weight="1">
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/card_4_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7">
-            <ImageView
-                android:id="@+id/carte4"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/card_fragment_4"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </ImageView>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:name="com.example.project.CardFragment">
+            </androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,14 +130,18 @@
             android:layout_weight="1">
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/card_5_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7">
-            <ImageView
-                android:id="@+id/carte5"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/card_fragment_5"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </ImageView>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:name="com.example.project.CardFragment">
+            </androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -129,14 +149,18 @@
             android:layout_weight="1">
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/card_6_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7">
-            <ImageView
-                android:id="@+id/carte6"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/card_fragment_6"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </ImageView>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:name="com.example.project.CardFragment">
+            </androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
