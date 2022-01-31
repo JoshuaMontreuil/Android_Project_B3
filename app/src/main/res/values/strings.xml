@@ -1,5 +1,8 @@
 <resources>
     <string name="home_text">MEMORY GAME</string>
+    <string name="End_text">CONGRATS YOU BEAT THE GAME</string>
+    <string name="back_home">HOME</string>
+    <string name="restart">RESTART</string>
     <string name="authors">Joshua - Florentin - Théo</string>
     <string name="app_name">Project</string>
     <string name="title_activity_2">Activity2</string>
@@ -11,4 +14,8 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="chronoInfo">BRAVO ! YOU\'VE DONE IT IN :\n12'225''12</string>
+    <string name="ScoreBoardHead_username">USERNAME</string>
+    <string name="ScoreBoardHead_Score">HIGHEST SCORE</string>
 </resources>
