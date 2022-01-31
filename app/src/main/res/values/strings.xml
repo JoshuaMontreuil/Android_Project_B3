@@ -12,10 +12,10 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="chronoInfo">BRAVO !</string>
+    <string name="chronoInfo">BRAVO ! YOU\'VE DONE IT IN :</string>
+    <string name="chrono">12\'225\'\'12</string>
+
     <string name="ScoreBoardHead_username">USERNAME</string>
     <string name="ScoreBoardHead_Score">HIGHEST SCORE</string>
 </resources>

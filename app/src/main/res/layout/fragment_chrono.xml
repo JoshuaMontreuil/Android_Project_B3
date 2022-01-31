@@ -10,7 +10,7 @@
         android:id="@+id/textChrono"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/chronoInfo"
+        android:text="@string/chrono"
         android:textAlignment="center"
         android:textSize="27sp"
         android:gravity="center"/>

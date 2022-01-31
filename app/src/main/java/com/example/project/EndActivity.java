@@ -37,22 +37,17 @@ public class EndActivity extends AppCompatActivity implements View.OnClickListen
         String json = prefs.getString("LIST","");
         List<String> list = gson.fromJson(json, new TypeToken<ArrayList<String>>(){}.getType());
 
-
+        /*
         for(int i = 0; i < list.size(); i++){
             ScoreBoardFragment fragment = new ScoreBoardFragment(list.get(i),list.get(i),list.get(i));
-
-        }
+        }*/
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-
-
-
-        //to_HomePage.setImageResource(R.drawable.home);
-        //restart_game.setImageResource(R.drawable.restart);
+        to_HomePage.setImageResource(R.drawable.home);
+        restart_game.setImageResource(R.drawable.restart);
 
         to_HomePage.setOnClickListener(this);
         restart_game.setOnClickListener(this);
