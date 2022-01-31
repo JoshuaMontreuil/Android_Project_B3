@@ -15,7 +15,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="chronoInfo">BRAVO ! YOU\'VE DONE IT IN :</string>
     <string name="chrono">12\'225\'\'12</string>
-
+    <string name="username">Username</string>
     <string name="ScoreBoardHead_username">USERNAME</string>
     <string name="ScoreBoardHead_Score">HIGHEST SCORE</string>
 </resources>
