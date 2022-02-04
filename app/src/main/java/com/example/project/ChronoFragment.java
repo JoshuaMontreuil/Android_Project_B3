@@ -22,7 +22,7 @@ public class ChronoFragment extends Fragment {
         return view;
     }
 
-    public void setText(int path){
+    public void setText(String path){
         text.setText(path);
     }
 

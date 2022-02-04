@@ -1,20 +1,18 @@
 package com.example.project;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CardFragment extends Fragment implements View.OnClickListener{
 
@@ -23,6 +21,7 @@ public class CardFragment extends Fragment implements View.OnClickListener{
     private ImageView imgViewFromFragment;
     private ObjetCarte associatedCard;
     private Partie associatedGameBoard;
+    private SharedPreferences associatedPrefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +31,10 @@ public class CardFragment extends Fragment implements View.OnClickListener{
         imgViewFromFragment.setImageResource(this.img_ref);
         imgViewFromFragment.setOnClickListener(this);
         return view;
+    }
+
+    public void setAssociatedPrefs(SharedPreferences prefs){
+        this.associatedPrefs = prefs;
     }
 
     public void updateCardDisplay(){
@@ -138,6 +141,21 @@ public class CardFragment extends Fragment implements View.OnClickListener{
         }
         //Check for end of game
         if(associatedGameBoard.allFound()){
+            //Save data to the application
+            associatedGameBoard.getChronometer().stop();
+            String current_username = associatedPrefs.getString("CURRENT_USERNAME","");
+            SharedPreferences.Editor editor = associatedPrefs.edit();
+            String time = (String) associatedGameBoard.getChronometer().getText();
+            //Get previous scores
+            ArrayList<Score> scores_list = new ArrayList<>();
+            Gson gson = new Gson();
+            String json_scores = associatedPrefs.getString("SCORES","");
+            scores_list = gson.fromJson(json_scores,new TypeToken<ArrayList<Score>>(){}.getType());
+            Score score = new Score(current_username, time);
+            scores_list.add(score);
+            String json_score = gson.toJson(scores_list);
+            editor.putString("SCORES", json_score);
+            editor.apply();
             //Go to the next activity
             Intent intent = new Intent(getContext(),EndActivity.class);
             startActivity(intent);
