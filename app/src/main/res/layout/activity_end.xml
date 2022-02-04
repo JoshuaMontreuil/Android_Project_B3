@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/crowdFlower">
+    android:background="@color/crayola">
 
     <LinearLayout
         android:id="@+id/CongratsText"
@@ -16,9 +16,9 @@
             android:layout_height="match_parent"
             android:text="@string/End_text"
             android:fontFamily="@font/font_"
-            android:textColor="@color/black"
+            android:textColor="@color/dekoral"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:gravity="center">
         </TextView>
     </LinearLayout>
@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/chronoInfo"
                 android:fontFamily="@font/font_"
-                android:textColor="@color/black"
+                android:textColor="@color/dekoral"
                 android:textAlignment="center"
                 android:gravity="center">
             </TextView>
@@ -66,7 +66,7 @@
                 android:layout_weight="1"
                 android:text="@string/ScoreBoardHead_username"
                 android:fontFamily="@font/font_"
-                android:textColor="@color/black"
+                android:textColor="@color/dekoral"
                 android:gravity="center"
                 android:textAlignment="center">
             </TextView>
@@ -76,7 +76,7 @@
                 android:layout_weight="1"
                 android:text="@string/ScoreBoardHead_Score"
                 android:fontFamily="@font/font_"
-                android:textColor="@color/black"
+                android:textColor="@color/dekoral"
                 android:gravity="center"
                 android:textAlignment="center">
             </TextView>
@@ -112,7 +112,7 @@
             android:layout_weight="1"
             android:text="@string/restart"
             android:fontFamily="@font/font_"
-                android:textColor="@color/black"
+                android:textColor="@color/dekoral"
             android:textSize="20sp"
             android:textAlignment="center">
         </TextView>
@@ -135,7 +135,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/back_home"
-                android:textColor="@color/black"
+                android:textColor="@color/dekoral"
                 android:fontFamily="@font/font_"
                 android:textSize="20sp"
                 android:textAlignment="center">
