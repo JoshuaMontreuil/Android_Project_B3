@@ -2,6 +2,7 @@ package com.example.project;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class Partie{
     private ArrayList<CardFragment> cardFragments = new ArrayList<>();
     private List<String> choosenImgs = new ArrayList<>();
     private List<String> cards_imgs = new ArrayList<>(Arrays.asList("avion","bateau","chaussure","chien","dent","ecureuil","fraise","grenouille","herisson","igloo","journal","kangourou","lapin","maison"));
+    private Chronometer chronometer;
 
     public Partie(int cardsNb, ArrayList<CardFragment> fragments){
         this.cardsNb = cardsNb;
@@ -149,5 +151,13 @@ public class Partie{
 
     public ArrayList<CardFragment> getCardFragments() {
         return this.cardFragments;
+    }
+
+    public void setChronometer(Chronometer chronometer) {
+        this.chronometer = chronometer;
+    }
+
+    public Chronometer getChronometer() {
+        return chronometer;
     }
 }

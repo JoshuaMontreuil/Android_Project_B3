@@ -9,8 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
+import com.google.gson.Gson;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -34,13 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        editor.putString("NAME", username.getText().toString());
-        editor.apply();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         start.setOnClickListener(this);
@@ -57,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (username.getText().toString().isEmpty()){
             Toast.makeText(getApplicationContext(), "Enter your Username", Toast.LENGTH_SHORT).show();
         } else {
+           String current_user = username.getText().toString();
+            //Save current username
+            editor.putString("CURRENT_USERNAME", current_user);
+            editor.apply();
             Intent intent = new Intent(MainActivity.this,MemoryActivity.class);
             startActivity(intent);
             startTransition.start();

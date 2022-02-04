@@ -12,8 +12,13 @@
         <entry key="..\:/Users/mljos/AndroidStudioProjects/Android_Project_B3/app/src/main/res/layout/fragment_chrono.xml" value="0.2296875" />
         <entry key="..\:/Users/mljos/AndroidStudioProjects/Android_Project_B3/app/src/main/res/layout/fragment_score_board.xml" value="0.159375" />
         <entry key="..\:/Users/mljos/AndroidStudioProjects/Project/app/src/main/res/layout/activity_main.xml" value="0.15806159420289856" />
+        <entry key="app/src/main/res/layout/activity_end.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.21739130434782608" />
-        <entry key="app/src/main/res/layout/activity_memory.xml" value="0.18697916666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_memory.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.11195542046605876" />
+        <entry key="app/src/main/res/layout/fragment_chrono.xml" value="0.12395833333333334" />
+        <entry key="app/src/main/res/layout/fragment_score_board.xml" value="0.12395833333333334" />
       </map>
     </option>
   </component>
