@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,10 +16,11 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageButton start = null;
-
     private EditText username;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
+    private MediaPlayer backgroundMusic;
+    private MediaPlayer startTransition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +30,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         username = (EditText) findViewById(R.id.editUsername);
         prefs = getSharedPreferences("MY_PREFS_NAME",MODE_PRIVATE);
         editor = prefs.edit();
+        backgroundMusic = MediaPlayer.create(this, R.raw.background);
+        startTransition = MediaPlayer.create(this, R.raw.start);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         start.setOnClickListener(this);
+        backgroundMusic.start();
+    }
+
+    protected void onPause(){
+        super.onPause();
+        backgroundMusic.pause();
     }
 
     @Override
@@ -47,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.apply();
             Intent intent = new Intent(MainActivity.this,MemoryActivity.class);
             startActivity(intent);
+            startTransition.start();
         }
     }
 }

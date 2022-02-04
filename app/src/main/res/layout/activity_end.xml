@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/crowdFlower">
 
     <LinearLayout
         android:id="@+id/CongratsText"
@@ -14,6 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/End_text"
+            android:fontFamily="@font/font_"
+            android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="20sp"
             android:gravity="center">
@@ -33,6 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/chronoInfo"
+                android:fontFamily="@font/font_"
+                android:textColor="@color/black"
                 android:textAlignment="center"
                 android:gravity="center">
             </TextView>
@@ -60,6 +65,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/ScoreBoardHead_username"
+                android:fontFamily="@font/font_"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:textAlignment="center">
             </TextView>
@@ -68,6 +75,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/ScoreBoardHead_Score"
+                android:fontFamily="@font/font_"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:textAlignment="center">
             </TextView>
@@ -92,15 +101,19 @@
             android:orientation="vertical">
             <ImageButton
                 android:id="@+id/RestartButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                android:background="@drawable/restart">
             </ImageButton>
             <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/restart"
+            android:fontFamily="@font/font_"
+                android:textColor="@color/black"
             android:textSize="20sp"
             android:textAlignment="center">
         </TextView>
@@ -112,15 +125,19 @@
             android:orientation="vertical">
             <ImageButton
                 android:id="@+id/HomeButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home"
+                android:layout_weight="0.3"
+                android:layout_gravity="center">
             </ImageButton>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/back_home"
+                android:textColor="@color/black"
+                android:fontFamily="@font/font_"
                 android:textSize="20sp"
                 android:textAlignment="center">
             </TextView>
