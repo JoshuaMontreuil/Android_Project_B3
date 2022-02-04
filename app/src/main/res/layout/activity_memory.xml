@@ -22,9 +22,10 @@
                 android:id="@+id/activity_memory_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="username"
+                android:text="@string/username"
+                android:fontFamily="@font/font_"
                 android:textSize="30dp"
-                android:textColor="@color/black">
+                android:textColor="@color/dekoral">
             </TextView>
         </LinearLayout>
         <LinearLayout
@@ -34,6 +35,8 @@
                 android:id="@+id/simpleChronometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/font_"
+                android:textColor="@color/dekoral"
                 android:textSize="30dp"/>
         </LinearLayout>
     </LinearLayout>

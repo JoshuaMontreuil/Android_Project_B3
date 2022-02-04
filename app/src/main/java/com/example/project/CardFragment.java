@@ -147,10 +147,13 @@ public class CardFragment extends Fragment implements View.OnClickListener{
             SharedPreferences.Editor editor = associatedPrefs.edit();
             String time = (String) associatedGameBoard.getChronometer().getText();
             //Get previous scores
-            ArrayList<Score> scores_list = new ArrayList<>();
+            ArrayList<Score> scores_list;
             Gson gson = new Gson();
             String json_scores = associatedPrefs.getString("SCORES","");
             scores_list = gson.fromJson(json_scores,new TypeToken<ArrayList<Score>>(){}.getType());
+            if(scores_list == null) {
+                scores_list = new ArrayList<>();
+            }
             Score score = new Score(current_username, time);
             scores_list.add(score);
             String json_score = gson.toJson(scores_list);
