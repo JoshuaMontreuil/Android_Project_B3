@@ -2,17 +2,18 @@ package com.example.project;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class CardFragment extends Fragment implements View.OnClickListener{
 
@@ -22,6 +23,9 @@ public class CardFragment extends Fragment implements View.OnClickListener{
     private ObjetCarte associatedCard;
     private Partie associatedGameBoard;
     private SharedPreferences associatedPrefs;
+    private MediaPlayer victorySound;
+    private MediaPlayer revealSound;
+    private MediaPlayer allRevealedSound;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,6 +34,9 @@ public class CardFragment extends Fragment implements View.OnClickListener{
         imgViewFromFragment = view.findViewById(R.id.card);
         imgViewFromFragment.setImageResource(this.img_ref);
         imgViewFromFragment.setOnClickListener(this);
+        victorySound = MediaPlayer.create(getContext(), R.raw.cartoon);
+        revealSound = MediaPlayer.create(getContext(), R.raw.reveal);
+        allRevealedSound = MediaPlayer.create(getContext(), R.raw.victory);
         return view;
     }
 
@@ -53,52 +60,52 @@ public class CardFragment extends Fragment implements View.OnClickListener{
     }
 
     public void updateToFaceImg(){
-        if(associatedCard.getImageFace()=="avion"){
+        if(associatedCard.getImageFace().equals("avion")){
             this.setImgRes(R.drawable.avion);
         }
-        else if(associatedCard.getImageFace()=="bateau"){
+        else if(associatedCard.getImageFace().equals("bateau")){
             this.setImgRes(R.drawable.bateau);
         }
-        else if(associatedCard.getImageFace()=="bonhomme1"){
+        else if(associatedCard.getImageFace().equals("bonhomme1")){
             this.setImgRes(R.drawable.bonhomme1);
         }
-        else if(associatedCard.getImageFace()=="card"){
+        else if(associatedCard.getImageFace().equals("card")){
             this.setImgRes(R.drawable.card);
         }
-        else if(associatedCard.getImageFace()=="chaussure"){
+        else if(associatedCard.getImageFace().equals("chaussure")){
             this.setImgRes(R.drawable.chaussure);
         }
-        else if(associatedCard.getImageFace()=="chien"){
+        else if(associatedCard.getImageFace().equals("chien")){
             this.setImgRes(R.drawable.chien);
         }
-        else if(associatedCard.getImageFace()=="dent"){
+        else if(associatedCard.getImageFace().equals("dent")){
             this.setImgRes(R.drawable.dent);
         }
-        else if(associatedCard.getImageFace()=="ecureuil"){
+        else if(associatedCard.getImageFace().equals("ecureuil")){
             this.setImgRes(R.drawable.ecureuil);
         }
-        else if(associatedCard.getImageFace()=="fraise"){
+        else if(associatedCard.getImageFace().equals("fraise")){
             this.setImgRes(R.drawable.fraise);
         }
-        else if(associatedCard.getImageFace()=="grenouille"){
+        else if(associatedCard.getImageFace().equals("grenouille")){
             this.setImgRes(R.drawable.grenouille);
         }
-        else if(associatedCard.getImageFace()=="herisson"){
+        else if(associatedCard.getImageFace().equals("herisson")){
             this.setImgRes(R.drawable.herisson);
         }
-        else if(associatedCard.getImageFace()=="igloo"){
+        else if(associatedCard.getImageFace().equals("igloo")){
             this.setImgRes(R.drawable.igloo);
         }
-        else if(associatedCard.getImageFace()=="journal"){
+        else if(associatedCard.getImageFace().equals("journal")){
             this.setImgRes(R.drawable.journal);
         }
-        else if(associatedCard.getImageFace()=="kangourou"){
+        else if(associatedCard.getImageFace().equals("kangourou")){
             this.setImgRes(R.drawable.kangourou);
         }
-        else if(associatedCard.getImageFace()=="lapin"){
+        else if(associatedCard.getImageFace().equals("lapin")){
             this.setImgRes(R.drawable.lapin);
         }
-        else if(associatedCard.getImageFace()=="maison"){
+        else if(associatedCard.getImageFace().equals("maison")){
             this.setImgRes(R.drawable.maison);
         }
         else{
@@ -128,12 +135,14 @@ public class CardFragment extends Fragment implements View.OnClickListener{
         String pairName = associatedGameBoard.pairFound();
         //Manage board
         if(!pairName.equals("")){ //On cache et bloque les cartes
+            revealSound.start();
             ArrayList<ObjetCarte> cards = associatedGameBoard.getCards();
             ArrayList<CardFragment> cardFragments = associatedGameBoard.getCardFragments();
             for(int i=0;i<cards.size();i++){
                 if(cards.get(i).getImageFace().equals(pairName)){
                     for(int x=0;x<cardFragments.size();x++){
-                        cardFragments.get(i).getImgViewFromFragment().setVisibility(View.INVISIBLE);
+                        //cardFragments.get(i).getImgViewFromFragment().setVisibility(View.INVISIBLE);
+                        cardFragments.get(i).getImgViewFromFragment().setOnClickListener(null);
                         cards.get(i).setFound(true);
                     }
                 }
@@ -152,14 +161,23 @@ public class CardFragment extends Fragment implements View.OnClickListener{
             String json_scores = associatedPrefs.getString("SCORES","");
             scores_list = gson.fromJson(json_scores,new TypeToken<ArrayList<Score>>(){}.getType());
             Score score = new Score(current_username, time, 0, 0, 0);
+            if(scores_list==null){
+                scores_list = new ArrayList<>();
+            }
             scores_list.add(score);
             String json_score = gson.toJson(scores_list);
             editor.putString("SCORES", json_score);
             editor.apply();
             //Go to the next activity
-            Intent intent = new Intent(getContext(),EndActivity.class);
-            startActivity(intent);
-            System.out.println("You won");
+            allRevealedSound.start();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable(){
+                public void run(){
+                    victorySound.start();
+                    Intent intent = new Intent(getContext(),EndActivity.class);
+                    startActivity(intent);
+                }
+            },1500);
         }
     }
 

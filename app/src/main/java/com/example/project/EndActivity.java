@@ -43,23 +43,17 @@ public class EndActivity extends AppCompatActivity implements View.OnClickListen
         //Get scores
         Gson gson = new Gson();
         String json_scores = prefs.getString("SCORES","");
-        //System.out.println("json_scores : " + json_scores);
-
         scores_list = gson.fromJson(json_scores,new TypeToken<ArrayList<Score>>(){}.getType());
-
         /*
-           Boucle permettant :
+           Boucle permettant de :
                 - ajouter un id a chaque joueur
                 - convertir le temps (string) en score (int) pour pouvoir trier les joueurs pour le leader board
          */
         for(int i = 0; i < scores_list.size(); i++){
-
             scores_list.get(i).setId(i);
-
             String temps_int = scores_list.get(i).getTime();
             temps_int = temps_int.replace(":", "");
             int temps = Integer.parseInt(temps_int);
-
             scores_list.get(i).setScore(temps);
         }
         // recuperer le dernier joueur inscrit pour ensuite gérer l'affichage
@@ -86,19 +80,21 @@ public class EndActivity extends AppCompatActivity implements View.OnClickListen
         for (Score player : scores_list){
             if (player.getId() == last_player_id){
                 last_player_position = player.getPosition();
-                last_player_position --;
+                last_player_position--;
             }
         }
-        for(int i = 0; i <= 10; i++) {
+        int max_players_in_leader_board = 9;
+        if(scores_list.size()<9){
+            max_players_in_leader_board = scores_list.size();
+        }
+        for(int i = 0; i <= max_players_in_leader_board-1; i++) {
             if (scores_list.get(last_player_position).getScore() < scores_list.get(i).getScore()){
                 lastPlayer_ScoreBoard = false;
             }
             ScoreBoardFragment fragment = new ScoreBoardFragment(scores_list.get(i).getUsername(), scores_list.get(i).getTime(), " "+(scores_list.get(i).getPosition()));
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.ScoreBoard, fragment)
-                    .commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.ScoreBoard, fragment).commit();
         }
-        if (lastPlayer_ScoreBoard){
+        if (lastPlayer_ScoreBoard && max_players_in_leader_board==9){
             ScoreBoardFragment fragment = new ScoreBoardFragment(scores_list.get(last_player_position).getUsername(), scores_list.get(last_player_position).getTime(), " "+(scores_list.get(last_player_position).getPosition()));
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.ScoreBoard, fragment)
@@ -114,7 +110,6 @@ public class EndActivity extends AppCompatActivity implements View.OnClickListen
         super.onResume();
         to_HomePage.setImageResource(R.drawable.home);
         restart_game.setImageResource(R.drawable.restart);
-
         to_HomePage.setOnClickListener(this);
         restart_game.setOnClickListener(this);
     }

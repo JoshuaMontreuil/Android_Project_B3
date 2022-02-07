@@ -72,22 +72,24 @@ public class Partie{
 
     public void hideAllCards(){
         for(int i=0;i<cardFragments.size();i++){
-            cardFragments.get(i).getAssociatedCard().setState(0);
+            if(!cardFragments.get(i).getAssociatedCard().getFound()){
+                cardFragments.get(i).getAssociatedCard().setState(0);
+            }
             this.updateDisplay();
         }
     }
 
-    public void revealAllCards(){
+    /*public void revealAllCards(){
         for(int i=0;i<cardFragments.size();i++){
             cardFragments.get(i).getAssociatedCard().setState(1);
             this.updateDisplay();
         }
-    }
+    }*/
 
     public boolean revealAllowed(){
         int revealedCards = 0;
         for(int i=0;i<cards.size();i++){
-            if(cards.get(i).getState()==1){
+            if(cards.get(i).getState()==1 && !cards.get(i).getFound()){
                 revealedCards++;
             }
         }
@@ -102,7 +104,7 @@ public class Partie{
     public String pairFound(){
         ArrayList<ObjetCarte> revealedCards = new ArrayList<>();
         for(int i=0;i<cards.size();i++){
-            if(cards.get(i).getState()==1){
+            if(cards.get(i).getState()==1 && !cards.get(i).getFound()){
                 revealedCards.add(cards.get(i));
             }
         }

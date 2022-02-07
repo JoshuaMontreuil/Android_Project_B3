@@ -2,6 +2,7 @@ package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ public class MemoryActivity extends AppCompatActivity {
     protected TextView username_memory;
     private SharedPreferences prefs;
     private Chronometer chronometer;
+    private MediaPlayer mainTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,7 @@ public class MemoryActivity extends AppCompatActivity {
         username_memory = findViewById(R.id.activity_memory_username);
         prefs = getSharedPreferences("MY_PREFS_NAME",MODE_PRIVATE);
         chronometer = findViewById(R.id.simpleChronometer);
+        mainTheme = MediaPlayer.create(this, R.raw.wii);
     }
 
     @Override
@@ -48,6 +51,13 @@ public class MemoryActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         partie.updateDisplay();
+        mainTheme.start();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mainTheme.pause();
     }
 
 }
