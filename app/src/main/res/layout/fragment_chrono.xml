@@ -12,6 +12,8 @@
         android:layout_height="match_parent"
         android:text="@string/chrono"
         android:textAlignment="center"
+        android:textColor="@color/dekoral"
+        android:fontFamily="@font/font_"
         android:textSize="27sp"
         android:gravity="center"/>
 </FrameLayout>
