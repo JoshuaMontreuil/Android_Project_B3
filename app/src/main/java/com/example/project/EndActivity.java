@@ -1,27 +1,17 @@
 package com.example.project;
 
-import static java.util.Collection.*;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.w3c.dom.Text;
-
-import java.text.Collator;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +23,7 @@ public class EndActivity extends AppCompatActivity implements View.OnClickListen
     protected  List<Score> scores_list;
 
     private SharedPreferences.Editor editor;
+    boolean lastPlayer_ScoreBoard; // variable pour savoir si le joueur est dans le score board ou pas
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,27 +33,79 @@ public class EndActivity extends AppCompatActivity implements View.OnClickListen
         restart_game = findViewById(R.id.RestartButton);
         prefs = getSharedPreferences("MY_PREFS_NAME",MODE_PRIVATE);
         editor = prefs.edit();
+        lastPlayer_ScoreBoard = true;
     }
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onStart() {
         super.onStart();
         //Get scores
         Gson gson = new Gson();
         String json_scores = prefs.getString("SCORES","");
-        System.out.println(json_scores);
+        //System.out.println("json_scores : " + json_scores);
+
         scores_list = gson.fromJson(json_scores,new TypeToken<ArrayList<Score>>(){}.getType());
+
+        /*
+           Boucle permettant :
+                - ajouter un id a chaque joueur
+                - convertir le temps (string) en score (int) pour pouvoir trier les joueurs pour le leader board
+         */
+        for(int i = 0; i < scores_list.size(); i++){
+
+            scores_list.get(i).setId(i);
+
+            String temps_int = scores_list.get(i).getTime();
+            temps_int = temps_int.replace(":", "");
+            int temps = Integer.parseInt(temps_int);
+
+            scores_list.get(i).setScore(temps);
+        }
+        // recuperer le dernier joueur inscrit pour ensuite gérer l'affichage
+        int last_player_id = scores_list.get(scores_list.size()-1).getId();
+
+        /*
+            Attribuer les postions des joueurs une fois que le tableau est trié en fonction des scores
+         */
+
+        // affichage du chrono en gros du dernier joueur
         ChronoFragment fragmentChrono = (ChronoFragment) getSupportFragmentManager().findFragmentById(R.id.ChronoScore);
-        fragmentChrono.setText(scores_list.get(scores_list.size()-1).getTime());
+        fragmentChrono.setText(scores_list.get(last_player_id).getTime());
+
+        /*
+            fonction pour trier les joueurs en fonction de leur score sur le jeu
+        */
+        Collections.sort(scores_list, (o1, o2) -> Double.compare(o1.getScore(), o2.getScore()));
 
         for(int i = 0; i < scores_list.size(); i++){
-            ScoreBoardFragment fragment = new ScoreBoardFragment(scores_list.get(i).getUsername(),scores_list.get(i).getTime()," 1");
+            scores_list.get(i).setPosition(i+1);
+        }
+
+        int last_player_position = 0;
+        for (Score player : scores_list){
+            if (player.getId() == last_player_id){
+                last_player_position = player.getPosition();
+                last_player_position --;
+            }
+        }
+        for(int i = 0; i <= 10; i++) {
+            if (scores_list.get(last_player_position).getScore() < scores_list.get(i).getScore()){
+                lastPlayer_ScoreBoard = false;
+            }
+            ScoreBoardFragment fragment = new ScoreBoardFragment(scores_list.get(i).getUsername(), scores_list.get(i).getTime(), " "+(scores_list.get(i).getPosition()));
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.ScoreBoard, fragment)
                     .commit();
         }
-        System.out.println("FIN : " + scores_list );
-
+        if (lastPlayer_ScoreBoard){
+            ScoreBoardFragment fragment = new ScoreBoardFragment(scores_list.get(last_player_position).getUsername(), scores_list.get(last_player_position).getTime(), " "+(scores_list.get(last_player_position).getPosition()));
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.ScoreBoard, fragment)
+                    .commit();
+           
+            lastPlayer_ScoreBoard = false;
+        }
 
     }
 

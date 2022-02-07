@@ -151,7 +151,7 @@ public class CardFragment extends Fragment implements View.OnClickListener{
             Gson gson = new Gson();
             String json_scores = associatedPrefs.getString("SCORES","");
             scores_list = gson.fromJson(json_scores,new TypeToken<ArrayList<Score>>(){}.getType());
-            Score score = new Score(current_username, time);
+            Score score = new Score(current_username, time, 0, 0, 0);
             scores_list.add(score);
             String json_score = gson.toJson(scores_list);
             editor.putString("SCORES", json_score);
